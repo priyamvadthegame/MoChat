@@ -2,4 +2,7 @@
     <string name="app_name">MoChat</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="get_phone_number_text">Enter your phone number</string>
+    <string name="username">username</string>
+    <string name="status">status</string>
+    <string name="basePathForUser">Users</string>
 </resources>

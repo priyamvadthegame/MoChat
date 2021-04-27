@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="250dp"
+
+        android:layout_height="250dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/profile_image"
+        app:civ_border_color="@color/appToolbar"
+        app:civ_border_width="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/username_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></de.hdodenhof.circleimageview.CircleImageView>
+
+    <EditText
+        android:id="@+id/username_edit_text"
+        android:layout_width="354dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="9dp"
+        android:background="@drawable/inputs"
+        android:drawableStart="@drawable/edit_profile"
+        android:hint="@string/username"
+        android:padding="6dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/status_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image"></EditText>
+
+    <EditText
+        android:id="@+id/status_edit_text"
+        android:layout_width="354dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="51dp"
+        android:background="@drawable/inputs"
+        android:drawableStart="@drawable/edit_status"
+        android:hint="@string/status"
+        android:padding="6dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/update_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_edit_text"></EditText>
+
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="51dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="102dp"
+        android:background="@color/appToolbar"
+        android:text="Update"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_edit_text" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

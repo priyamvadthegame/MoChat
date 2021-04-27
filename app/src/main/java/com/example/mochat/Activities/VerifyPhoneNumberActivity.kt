@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mochat.R
-import com.google.android.gms.tasks.TaskExecutors
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -18,6 +17,7 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+import com.google.firebase.database.*
 import java.util.concurrent.TimeUnit
 
 
@@ -27,6 +27,8 @@ class VerifyPhoneNumberActivity:AppCompatActivity(){
     private var progressBar: ProgressBar? = null
     private var editText: EditText? = null
     private var textView: TextView?=null
+    private var rootRef :DatabaseReference?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.verify_phone_activity)
@@ -34,6 +36,7 @@ class VerifyPhoneNumberActivity:AppCompatActivity(){
         progressBar = findViewById(R.id.progressbar)
         editText = findViewById(R.id.editTextCode)
         textView=findViewById(R.id.textView)
+        rootRef=FirebaseDatabase.getInstance().reference
         val phonenumber = intent.getStringExtra("phonenumber")
         sendVerificationCode(phonenumber)
         findViewById<View>(R.id.buttonSignIn).setOnClickListener(object :
@@ -60,11 +63,33 @@ class VerifyPhoneNumberActivity:AppCompatActivity(){
         mAuth!!.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    progressBar!!.visibility = View.INVISIBLE
-                    val intent =
-                        Intent(this@VerifyPhoneNumberActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    val user = task.result!!.user
+                    rootRef?.child(getString(R.string.basePathForUser))?.child(user.uid)?.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+                            progressBar!!.visibility = View.INVISIBLE
+                            Toast.makeText(
+                                    this@VerifyPhoneNumberActivity,
+                                    error.message,
+                                    Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            progressBar!!.visibility = View.INVISIBLE
+                            Log.d("checkUser","inside it")
+                            if (snapshot.value!=null) {
+                                val intent =
+                                        Intent(this@VerifyPhoneNumberActivity, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            }
+                            else
+                            {
+                                var i:Intent= Intent(this@VerifyPhoneNumberActivity,NewUserGetDetailsActivity::class.java)
+                                startActivity(i)
+                            }
+                        }
+                    })
                 } else {
                     progressBar!!.visibility = View.INVISIBLE
                     Toast.makeText(

@@ -53,6 +53,12 @@ class MainActivity : AppCompatActivity() {
         var i:Intent=Intent(this,LoginActivity::class.java)
         startActivity(i)
     }
+    fun redirectToSettingsActivity()
+    {
+        var i:Intent=Intent(this,SettingsActivity::class.java)
+        startActivity(i)
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
          super.onOptionsItemSelected(item)
@@ -62,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
             }
                 R.id.settings->{
-
+                        redirectToSettingsActivity()
                 }
             R.id.logout->{
                 mAuth?.signOut()

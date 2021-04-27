@@ -1,6 +1,8 @@
 package com.example.mochat.Activities
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -49,6 +51,15 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+
+        getPermissions()
+    }
+
+    private fun getPermissions() {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+        {
+            requestPermissions(arrayOf<String>(Manifest.permission.WRITE_CONTACTS,Manifest.permission.READ_CONTACTS,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA),1)
+        }
     }
 
     override fun onStart() {
